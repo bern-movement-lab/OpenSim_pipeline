@@ -10,9 +10,9 @@ clc;
 
 %% Load the project data into a subject
 
-% dataDir = 'P:\LFE\G\Research-PHY\DATEN\FP\Partload\ViconDataPROC';
+dataDir = 'P:\LFE\G\Research-PHY\DATEN\FP\Partload\ViconDataPROC';
 
-dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
+% dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
 
 subjectDir = dir(dataDir);
 subjectCtr = 0;
@@ -29,9 +29,9 @@ for subjectIdx = 1:numel(subjectDir)
                     for filesIdx = 1:numel(files)
                         if contains(files(filesIdx).name, 'static')
                             subject(subjectCtr).staticFilePath = fullfile(files(filesIdx).folder, files(filesIdx).name);
-                            c3d = ezc3dRead(subject(subjectCtr).staticFilePath);
-                            subject(subjectCtr).modelMass = c3d.parameters.PROCESSING.Bodymass.DATA; % mass in kg
-                            subject(subjectCtr).modelHeight = c3d.parameters.PROCESSING.Height.DATA/1000; % height in m
+                            % c3d = ezc3dRead(subject(subjectCtr).staticFilePath);
+                            % subject(subjectCtr).modelMass = c3d.parameters.PROCESSING.Bodymass.DATA; % mass in kg
+                            % subject(subjectCtr).modelHeight = c3d.parameters.PROCESSING.Height.DATA/1000; % height in m
                         elseif contains(files(filesIdx).name, 'walk')
                             sessionName = erase(files(filesIdx).name, [subjectId, '_']);
                             sessionName = erase(sessionName, '.c3d');
@@ -57,7 +57,7 @@ for idx = 2:numel(subject)
     
 end%for
 
-%% create plot to IK
+%% 
 
 exportVariables = ["time", "hip_adduction_l", "hip_adduction_r",...
     "hip_flexion_l", "hip_flexion_r", "hip_rotation_l", "hip_rotation_r",...
@@ -79,11 +79,11 @@ for subjectIdx = 1:numel(subject)
                     exportTable_id = table();
 %                     figure
 
-                    ikFiles = dir(fullfile(subject(subjectIdx).outputDir, subject(subjectIdx).subjectId, folders(folderIdx).name, subfolder(subfolderIdx).name, '*.mot'));
-                    idFiles = dir(fullfile(subject(subjectIdx).outputDir, subject(subjectIdx).subjectId, folders(folderIdx).name, subfolder(subfolderIdx).name, '*.sto'));
+                    motFiles = dir(fullfile(subject(subjectIdx).outputDir, subject(subjectIdx).subjectId, folders(folderIdx).name, subfolder(subfolderIdx).name, '*.mot'));
+                    stoFiles = dir(fullfile(subject(subjectIdx).outputDir, subject(subjectIdx).subjectId, folders(folderIdx).name, subfolder(subfolderIdx).name, '*.sto'));
                     
-                    for ikfileIdx = 1:numel(ikFiles)
-                        ikdata = utilities.readMOTfile(fullfile(ikFiles(ikfileIdx).folder, ikFiles(ikfileIdx).name));
+                    for motFileIdx = 1:numel(motFiles)
+                        motData = utilities.readMOTfile(fullfile(motFiles(motFileIdx).folder, motFiles(motFileIdx).name));
 %                         subplot(2,1,1)
 %                         plot(ikdata.Data.time, ikdata.Data.hip_flexion_r),
 %                         hold on;
@@ -100,29 +100,24 @@ for subjectIdx = 1:numel(subject)
                         
                         % export mot data in csv
                         for idxExpEntry = 1:numel(exportVariables)
-                            exportTable_ik.(exportVariables{idxExpEntry}) = ikdata.Data.(exportVariables{idxExpEntry})';
+                            exportTable_mot.(exportVariables{idxExpEntry}) = motData.Data.(exportVariables{idxExpEntry})';
                         end%for
                         
-                        [~, orgFileName, ~] = fileparts(ikFiles(ikfileIdx).name);
-                        fileName = fullfile(ikFiles(ikfileIdx).folder, [orgFileName, '.csv']);
-                        writetable(exportTable_ik, fileName);
+                        [~, orgFileName, ~] = fileparts(motFiles(motFileIdx).name);
+                        fileName = fullfile(motFiles(motFileIdx).folder, [orgFileName, '.csv']);
+                        writetable(exportTable_mot, fileName);
                     end%for
                     
-                    for idfileIdx = 1:numel(idFiles)
-                        if contains(idFiles(idfileIdx).name, 'walk')
-                            iddata = utilities.readSTOfile(fullfile(idFiles(idfileIdx).folder, idFiles(idfileIdx).name));
-
-                            for idxExpEntry = 1:numel(exportVariables_id)
-                                exportTable_id.(exportVariables_id{idxExpEntry}) = iddata.Data.(exportVariables_id{idxExpEntry})';
-                            end%for
-                            [~, orgFileName, ~] = fileparts(idFiles(idfileIdx).name);
-                            fileName = fullfile(idFiles(idfileIdx).folder, [orgFileName, '.csv']);
-                            writetable(exportTable_id, fileName);
+                    for stoFileIdx = 1:numel(stoFiles)
+                        if contains(stoFiles(stoFileIdx).name, 'walk')
+                            stoData = utilities.readSTOfile(fullfile(stoFiles(stoFileIdx).folder, stoFiles(stoFileIdx).name));
+                            % export sto data in csv
+                            exportTable_sto = struct2table(stoData.Data);
+                            [~, orgFileName, ~] = fileparts(stoFiles(stoFileIdx).name);
+                            fileName = fullfile(stoFiles(stoFileIdx).folder, [orgFileName, '.csv']);
+                            writetable(exportTable_sto, fileName);
                         end%if
-                        
                     end%for
-%                     sgtitle(['Subject: ' subject(1).subjectId, ', Trial: ', subfolder(subfolderIdx).name])
-
                 end%if
             end%for
         end%if

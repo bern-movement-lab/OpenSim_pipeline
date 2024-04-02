@@ -28,7 +28,7 @@ function data = readMOTfile(mot_file)
                 else
                     values = strsplit(currentLine);
                     for idx = 2:length(values)
-                        data.Data.(lineNames{idx-1})(dataLineNr) = str2double(values{idx});
+                        data.Data.(lineNames{idx-1})(dataLineNr,1) = str2double(values{idx});
                     end%for
                     dataLineNr = dataLineNr + 1;
                 end%if
