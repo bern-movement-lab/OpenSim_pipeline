@@ -9,9 +9,13 @@ clc;
 % addpath('C:\Users\blp7\LocalWorkSpace\partload\partload');
 
 %% Load the project data into a subject
+if isunix && ~ismac
+    CEPHpath = '/home/patric/mounts/research-PHY';
+else
+    CEPHpath = 'P:\LFE\G\Research-PHY';
+end
 
-dataDir = 'P:\LFE\G\Research-PHY\DATEN\FP\Partload\ViconDataPROC';
-
+dataDir = fullfile(CEPHpath,'DATEN/FP/Partload/ViconDataPROC');
 % dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
 
 subjectDir = dir(dataDir);
