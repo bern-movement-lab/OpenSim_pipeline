@@ -22,23 +22,33 @@ subjectCtr = 0;
 for subjectIdx = 1:numel(subjectDir)
     subjectId = subjectDir(subjectIdx).name;
     if contains(subjectId, 'PL')
-        subjectCtr = subjectCtr + 1;
-        subject(subjectCtr,1) = partload.Subject('subjectId', subjectId);
-        trialDir = dir(fullfile(subjectDir(subjectIdx).folder, subjectId));
-        for trialDirIdx = 1:numel(trialDir)
-            if trialDir(trialDirIdx).isdir
-                fileDir = dir(fullfile(trialDir(trialDirIdx).folder, trialDir(trialDirIdx).name, '*.c3d'));
-                for fileIdx = 1:numel(fileDir)
-                    if contains(fileDir(fileIdx).name, 'static')
-                        subject(subjectCtr).staticFilePath = fullfile(fileDir(filesIdx).folder, fileDir(filesIdx).name);
-                    elseif contains(fileDir(fileIdx).name, 'walk')
-                        sessionName = erase(fileDir(fileIdx).name, [subjectId, '_']);
-                        sessionName = erase(sessionName, '.c3d');
-                        taskFilePath = fullfile(fileDir(fileIdx).folder, fileDir(fileIdx).name);
-                        subject(subjectCtr) = subject(subjectCtr).addTask(partload.Task('walk', sessionName, taskFilePath));
-                    end%if
-                end%for
-            end%if
+        dirContent = dir(fullfile(subjectDir(subjectIdx).folder, subjectId));
+        for dirContentIdx = 1:numel(dirContent)
+            if dirContent(dirContentIdx).isdir && ~contains(dirContent(dirContentIdx).name, '.')
+                files = dir(fullfile(dirContent(dirContentIdx).folder, ...
+                    dirContent(dirContentIdx).name, '*.c3d'));
+                if ~isempty(files)
+                    subjectCtr = subjectCtr + 1;
+                    subject(subjectCtr) = partload.Subject('subjectId', subjectId);
+                    for filesIdx = 1:numel(files)
+                        if contains(files(filesIdx).name, 'static')
+                            subject(subjectCtr).staticFilePath = fullfile(...
+                                files(filesIdx).folder, files(filesIdx).name);
+                            c3d = ezc3dRead(subject(subjectCtr).staticFilePath);
+                            subject(subjectCtr).modelMass = ...
+                                c3d.parameters.PROCESSING.Bodymass.DATA; % mass in kg
+                            subject(subjectCtr).modelHeight = ...
+                                c3d.parameters.PROCESSING.Height.DATA/1000; % height in m
+                        elseif contains(files(filesIdx).name, 'walk')
+                            sessionName = erase(files(filesIdx).name, [subjectId, '_']);
+                            sessionName = erase(sessionName, '.c3d');
+                            taskFilePath = fullfile(files(filesIdx).folder, files(filesIdx).name);
+                            subject(subjectCtr) = subject(subjectCtr).addTask(...
+                                partload.Task('walk', sessionName, taskFilePath));
+                        end%if
+                    end%for
+                end%if
+            end%for
         end%for
     end%if
 end%for
@@ -46,7 +56,7 @@ end%for
 
 
 %% generate and scale a model
-for idx = 1:numel(subject)
+for idx = 3:4
     if ~exist(subject(idx).modelPath, 'file')
         subject(idx).buildModel;
     end%if

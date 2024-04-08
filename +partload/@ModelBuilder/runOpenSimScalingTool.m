@@ -30,8 +30,8 @@ scalingSetupFile = this.createSpecificScalingSetupFile();
 % copy Geometry files from template directory if not already existent,
 % as there will be problems rendering the model in OpenSim if geometry
 % files are not located at the same directory with the model
-if ~exist( fullfile( this.modelDir, 'geometry' ), 'dir' )
-    copyfile( fullfile( fileparts(this.modelTemplatePath), 'geometry' ), fullfile( this.modelDir, 'geometry' ) );
+if ~exist( fullfile( this.modelDir, 'Geometry' ), 'dir' )
+    copyfile( fullfile( fileparts(this.modelTemplatePath), 'Geometry' ), fullfile( this.modelDir, 'Geometry' ) );
 end
 
 % run scaling tool
