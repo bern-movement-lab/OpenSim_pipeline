@@ -10,6 +10,8 @@ clc;
 %% Load the project data into a subject
 if isunix && ~ismac
     CEPHpath = '/home/patric/mounts/research-PHY';
+elseif isunix && ismac
+    CEPHpath = '/Volumes/Research-PHY';
 else
     CEPHpath = 'P:\LFE\G\Research-PHY';
 end
