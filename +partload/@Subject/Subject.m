@@ -154,9 +154,13 @@ classdef Subject
             if ~isempty(obj.outputDir)
                 outputDir = obj.outputDir;
             else
-%                 outputDir = pwd;
-%                 outputDir = 'P:\DATEN\FP\Partload\OpenSimData';
-                outputDir = 'C:\Users\ptresearch\Desktop\partload';
+                %                 outputDir = pwd;
+                %                 outputDir = 'P:\DATEN\FP\Partload\OpenSimData';
+                if isunix && ~ismac
+                    outputDir = '/home/patric/fast/matlab-output/partload-opensim';
+                else
+                    outputDir = 'C:\Users\ptresearch\Desktop\partload';
+                end
             end
         end
 
