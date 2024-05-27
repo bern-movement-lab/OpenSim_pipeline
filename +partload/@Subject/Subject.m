@@ -161,7 +161,7 @@ classdef Subject
                 elseif isunix && ismac
                     outputDir = '/Users/patric/Matlab-Output/partload-opensim';
                 else
-                    outputDir = 'C:\Users\ptresearch\Desktop\partload';
+                    outputDir = 'C:\Users\patric\matlab-output\partload-opensim';
                 end
             end
         end
