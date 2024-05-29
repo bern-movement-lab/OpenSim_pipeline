@@ -31,3 +31,5 @@ end
 
 sessToSimulate = {'Walk100'};
 subjectsToSimulate = {'PL09','PL10','PL11','PL12','PL13','PL15'};
+subjectsToSimulate = {'PL11','PL12','PL13','PL15'};
+subjectsToSimulate = {'PL12','PL13','PL15'};

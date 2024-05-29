@@ -30,4 +30,5 @@ else
 end
 
 sessToSimulate = {'Walk15kg'};
-subjectsToSimulate = {'PL09','PL10','PL11','PL12','PL13','PL15'};
+subjectsToSimulate = {'PL09','PL10','PL11','PL12','PL13','PL14','PL15'};
+subjectsToSimulate = {'PL11','PL12','PL13','PL14','PL15'};

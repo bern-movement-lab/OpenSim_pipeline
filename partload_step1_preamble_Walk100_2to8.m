@@ -30,4 +30,5 @@ else
 end
 
 sessToSimulate = {'Walk100'};
-subjectsToSimulate = {'PL02','PL03','PL04','PL05','PL06','PL07','PL08'};
+% subjectsToSimulate = {'PL02','PL03','PL04','PL05','PL06','PL07','PL08'};
+subjectsToSimulate = {'PL08'};
