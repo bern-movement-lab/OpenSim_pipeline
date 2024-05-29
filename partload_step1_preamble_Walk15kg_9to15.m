@@ -1,5 +1,5 @@
 %% Init
-worklocal = true;
+worklocal = false;
 
 %% Load the project data into a subject
 if isunix && ~ismac
@@ -25,10 +25,10 @@ end
 if worklocal
     dataDir = CEPHpath;
 else
-    dataDir = fullfile(CEPHpath,'DATEN/FP/Partload/DataForMOLApp');
+    dataDir = fullfile(CEPHpath,'DATEN/FP/Partload/DataForOpenSim');
     % dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
 end
 
 sessToSimulate = {'Walk15kg'};
 subjectsToSimulate = {'PL09','PL10','PL11','PL12','PL13','PL14','PL15'};
-subjectsToSimulate = {'PL11','PL12','PL13','PL14','PL15'};
+subjectsToSimulate = {'PL09','PL11','PL12','PL13','PL14','PL15'};

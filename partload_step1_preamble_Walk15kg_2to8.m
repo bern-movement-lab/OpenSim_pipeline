@@ -1,5 +1,5 @@
 %% Init
-worklocal = true;
+worklocal = false;
 
 %% Load the project data into a subject
 if isunix && ~ismac
@@ -25,7 +25,7 @@ end
 if worklocal
     dataDir = CEPHpath;
 else
-    dataDir = fullfile(CEPHpath,'DATEN/FP/Partload/DataForMOLApp');
+    dataDir = fullfile(CEPHpath,'DATEN/FP/Partload/DataForOpenSim');
     % dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
 end
 

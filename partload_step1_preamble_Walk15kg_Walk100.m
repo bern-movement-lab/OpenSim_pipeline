@@ -29,5 +29,7 @@ else
     % dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
 end
 
-sessToSimulate = {'Walk15kg'};
-subjectsToSimulate = {'PL16','PL17','PL18','PL19','PL20','PL21'};
+sessToSimulate = {'Walk15kg','Walk100'};
+subjectsToSimulate = {...
+    'PL02','PL03','PL04','PL05','PL06','PL07','PL08','PL09','PL11',...
+    'PL12','PL13','PL15','PL16','PL17','PL18','PL19','PL20','PL21'};
