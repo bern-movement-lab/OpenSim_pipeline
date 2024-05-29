@@ -3,7 +3,7 @@ subjectDir = dir(dataDir);
 subjectCtr = 1;
 for subjectIdx = 1:numel(subjectDir)
     subjectId = subjectDir(subjectIdx).name;
-    if contains(subjectId, 'PL') && contains(subjectsToSimulate, subjectId)
+    if contains(subjectId, 'PL') && any(contains(subjectsToSimulate, subjectId))
         dirContent = dir(fullfile(subjectDir(subjectIdx).folder, subjectId));
         for dirContentIdx = 1:numel(dirContent)
             if dirContent(dirContentIdx).isdir && ~contains(dirContent(dirContentIdx).name, '.')
@@ -14,9 +14,7 @@ for subjectIdx = 1:numel(subjectDir)
                         % subjectCtr = subjectCtr + 1;
                         subjects.(dirContent(dirContentIdx).name)(subjectCtr) = ...
                             partload.Subject('subjectId', subjectId);
-                        if ~exist('nfiles','var')
-                            nfiles = 1:numel(files);
-                        end%if
+                        nfiles = 1:numel(files);
                         for filesIdx = nfiles
                             if contains(files(filesIdx).name, 'static')
                                 subjects.(dirContent(dirContentIdx).name)(subjectCtr).staticFilePath = fullfile(...

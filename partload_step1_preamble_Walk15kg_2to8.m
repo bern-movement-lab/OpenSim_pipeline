@@ -31,4 +31,3 @@ end
 
 sessToSimulate = {'Walk15kg'};
 subjectsToSimulate = {'PL02','PL03','PL04','PL05','PL06','PL07','PL08'};
-% nfiles = 1:2; % process only one measurement; comment out for all

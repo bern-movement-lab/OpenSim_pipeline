@@ -72,8 +72,34 @@ for i=1:numel(tasks)
     taskProcessor.runInverseDynamics;
     taskProcessor.runJointReactionForceAnalysis;
     
+    % convert outputs to csv
+    motFiles = dir(fullfile(taskProcessor.analysisDir, '*.mot'));
+    for motFileIdx = 1:numel(motFiles)
+        motData = utilities.readMOTfile( ...
+            fullfile(motFiles(motFileIdx).folder, ...
+            motFiles(motFileIdx).name));
+
+        % export mot data to csv
+        exportTable_mot = struct2table(motData.Data);
+        [~, orgFileName, ~] = fileparts(motFiles(motFileIdx).name);
+        fileName = fullfile(motFiles(motFileIdx).folder, ...
+            [orgFileName, '.csv']);
+        writetable(exportTable_mot, fileName);
+    end
+    stoFiles = dir(fullfile(taskProcessor.analysisDir, '*.sto'));
+    for stoFileIdx = 1:numel(stoFiles)
+        if contains(stoFiles(stoFileIdx).name, 'walk')
+            stoData = utilities.readSTOfile( ...
+                fullfile(stoFiles(stoFileIdx).folder, ...
+                stoFiles(stoFileIdx).name));
+            % export sto data to csv
+            exportTable_sto = struct2table(stoData.Data);
+            [~, orgFileName, ~] = fileparts(stoFiles(stoFileIdx).name);
+            fileName = fullfile(stoFiles(stoFileIdx).folder, ...
+                [orgFileName, '.csv']);
+            writetable(exportTable_sto, fileName);
+        end
+    end
     
     disp(['Finished with task ', task.taskType, ' ', task.repetitionId, ' for ' obj.subjectId]);
-
-
 end
