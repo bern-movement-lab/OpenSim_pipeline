@@ -4,30 +4,14 @@ all: Partload
 
 Partload: Partload15kg Partload100
 
-Partload15kg: Partload15kg_2to8 Partload15kg_9to15 Partload15kg_16to21
-
-Partload15kg_2to8:
-	/usr/local/MATLAB/R2021a/bin/matlab -batch "partload_pipeline_walk15kg_2to8"
-
-Partload15kg_9to15:
-	/usr/local/MATLAB/R2021a/bin/matlab -batch "partload_pipeline_walk15kg_9to15"
-
-Partload15kg_16to21:
-	/usr/local/MATLAB/R2021a/bin/matlab -batch "partload_pipeline_walk15kg_16to21"
-
-Partload100: Partload100_2to8 Partload100_9to15 Partload100_16to21
-
-Partload100_2to8:
-	/usr/local/MATLAB/R2021a/bin/matlab -batch "partload_pipeline_walk100_2to8"
-
-Partload100_9to15:
-	/usr/local/MATLAB/R2021a/bin/matlab -batch "partload_pipeline_walk100_9to15"
-
-Partload100_16to21:
-	/usr/local/MATLAB/R2021a/bin/matlab -batch "partload_pipeline_walk100_16to21"
-
 Partload15kg_100:
 	/usr/local/MATLAB/R2021a/bin/matlab -batch "partload_pipeline_walk15kg_walk100"
+
+Partload15kg:
+	/usr/local/MATLAB/R2021a/bin/matlab -batch "partload_pipeline_walk15kg"
+
+Partload100:
+	/usr/local/MATLAB/R2021a/bin/matlab -batch "partload_pipeline_walk100"
 
 nothing: 
 	echo "Nothing"
