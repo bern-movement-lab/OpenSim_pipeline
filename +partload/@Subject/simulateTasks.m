@@ -45,9 +45,10 @@ for i=1:numel(tasks)
     disp(['Started with task ', task.taskType, ' ', task.repetitionId ' for ', obj.subjectId]);
 
     c3d = ezc3dRead(task.c3dPath);
-    %% create time array differently or start with 0s!!!
-%     task.frameRange = [c3d.header.points.firstFrame, c3d.header.points.lastFrame];
-    task.frameRange = [0, (c3d.header.points.lastFrame -c3d.header.points.firstFrame)];
+
+    % set range of data as set by region of interest in Nexus
+    task.frameRange = [c3d.header.points.firstFrame, c3d.header.points.lastFrame];
+%     task.frameRange = [0, (c3d.header.points.lastFrame -c3d.header.points.firstFrame)];
     
     taskProcessor = partload.TaskProcessor(...
         'outputDir', obj.outputDir, ...
@@ -56,7 +57,7 @@ for i=1:numel(tasks)
         'analysisNo', task.repetitionId,...
         'modelFile', obj.modelPath,...
         'c3dFile', task.c3dPath,...
-        'timeRange', task.frameRange / 200,...
+        'timeRange', task.frameRange / c3d.header.points.frameRate,...
         'labRotation', obj.labRotation...
         );
     
@@ -67,7 +68,10 @@ for i=1:numel(tasks)
     if ~isempty(task.rightForceplateIDs)
         taskProcessor.rightForceplateIDs = task.rightForceplateIDs;
     end
-
+    
+    % disable event detection to use events defined with Nexus
+    taskProcessor.autoEvents = false;
+    
     % run simulation
     taskProcessor.runInverseDynamics;
     taskProcessor.runJointReactionForceAnalysis;
