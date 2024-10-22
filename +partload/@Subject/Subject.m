@@ -45,7 +45,7 @@ classdef Subject
 
     properties
         subjectId % [1x1 string] Subject ID.
-        labRotation = [0 0 0]; % [1x3 double] Magnitude of rotation in degrees for the input data in the c3d file to match the OpenSim coordinate system.
+        labRotation = [90 0 0]; % [1x3 double] Magnitude of rotation in degrees for the input data in the c3d file to match the OpenSim coordinate system.
         outputDir % [1x1 string] Path to directory where output files shall be saved at.
         modelMass % [1x1 double] Mass of the subject in kg.
         modelHeight % [1x1 double] Height of the subject in cm.
@@ -159,7 +159,7 @@ classdef Subject
                 if isunix && ~ismac
                     outputDir = '/home/patric/fast/matlab-output/partload-opensim';
                 elseif isunix && ismac
-                    outputDir = '/Users/patric/Matlab-Output/partload-opensim';
+                    outputDir = '/Users/jana/matlab-output/partload-opensim';
                 else
                     outputDir = 'C:\Users\patric\matlab-output\partload-opensim';
                 end

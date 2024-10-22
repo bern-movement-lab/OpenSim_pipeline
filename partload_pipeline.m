@@ -6,6 +6,10 @@ clear all;
 clc;
 worklocal = true;
 
+import org.opensim.modeling.* 
+myMatlabLog = JavaLogSink();
+Logger.addSink(myMatlabLog);
+
 %% Load the project data into a subject
 if isunix && ~ismac
     if worklocal
@@ -28,15 +32,15 @@ else
 end
 
 if worklocal
-    dataDir = CEPHpath;
+    dataDir = '/Users/jana/Downloads/Partload-Data';
 else
     dataDir = fullfile(CEPHpath,'DATEN/FP/Partload/DataForMOLApp');
     % dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
 end
 
-sessToSimulate = {'Walk15kg','Walk100'};
-subjectsToSimulate = {'PL02'};
-nfiles = 1:2; % process only one measurement; comment out for all
+sessToSimulate = {'Walk100'};
+subjectsToSimulate = {'PL04'};
+% nfiles = 1:2; % process only one measurement; comment out for all
 
 subjects = struct;
 subjectDir = dir(dataDir);
