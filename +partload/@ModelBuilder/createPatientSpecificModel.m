@@ -23,7 +23,7 @@ function [obj, newModelPath] = createPatientSpecificModel(obj)
 
 disp('Started creating subject specific model');
 
-obj = obj.runOpenSimScalingTool();
+obj = obj.runAutomaticScalingTool();
 
 disp('Finished creating subject specific model');
 

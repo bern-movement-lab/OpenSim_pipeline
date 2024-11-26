@@ -1,4 +1,4 @@
-function prepareTRCFile(obj)
+function obj = prepareTRCFile(obj)
 %PREPARETRCFILE Prepares TRC file for scaling, converts from C3D format if necessary.
 %
 %   This method checks if the file specified by the trcStaticPath property
@@ -38,5 +38,9 @@ c3dAdapter = c3dAdapter.rotateData();
 % end
 
 c3dAdapter.writeTRC();
+
+t0 = c3dAdapter.markers.data.Time(1);
+t1 = c3dAdapter.markers.data.Time(end);
+obj.scalingTimeRange = [t0 t1];
 
 end

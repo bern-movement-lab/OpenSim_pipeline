@@ -30,8 +30,8 @@ if isempty(obj.c3dAdapter) || ~exist(obj.motFile, 'file')
 end
 
 % copy IK_Setup.xml and Reserve_Actuators.xml to setupFiles dir
-%copyfile( fullfile( fileparts(mfilename('fullpath')), 'Templates', 'Reserve_Actuators.xml' ), obj.xmlSetupReserveActuators );
-%tlsm.utilities.fancyDisplay(sprintf('Copy Reserve Actuators Setup File to Setup File Dir:\n%s', obj.xmlSetupReserveActuators));
+copyfile( fullfile( fileparts(mfilename('fullpath')), 'Templates', 'Reserve_Actuators_3.xml' ), obj.xmlSetupReserveActuators );
+tlsm.utilities.fancyDisplay(sprintf('Copy Reserve Actuators Setup File to Setup File Dir:\n%s', obj.xmlSetupReserveActuators));
 
 % build GRF Setup File and save to setupFiles dir
 obj.prepareGRFSetupFile;

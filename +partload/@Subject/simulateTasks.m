@@ -74,7 +74,7 @@ for i=1:numel(tasks)
     
     % run simulation
     taskProcessor.runInverseDynamics;
-    % taskProcessor.runJointReactionForceAnalysis;
+    taskProcessor.runJointReactionForceAnalysis;
     
     % convert outputs to csv
     motFiles = dir(fullfile(taskProcessor.analysisDir, '*.mot'));

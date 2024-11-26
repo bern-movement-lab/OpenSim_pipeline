@@ -22,7 +22,7 @@ function setupFilePath = createSpecificScalingSetupFile( this )
 %   Author(s):      Lukas Connolly
 %                   Philippe Baehler (BFH / Uni Bern, 2024)
 
-this.prepareTRCFile;
+this = this.prepareTRCFile;
 
 %% load xml
 if this.InitialScaling == false
@@ -33,6 +33,7 @@ end
 %% manipulate xml
 
 xmlDoc.getElementsByTagName('time_range').item(0).getFirstChild.setData(num2str(this.scalingTimeRange));
+xmlDoc.getElementsByTagName('time_range').item(1).getFirstChild.setData(num2str(this.scalingTimeRange));
 xmlDoc.getElementsByTagName('model_file').item(0).getFirstChild.setData(this.modelTemplatePath);
 xmlDoc.getElementsByTagName('marker_file').item(0).getFirstChild.setNodeValue(this.trcStaticPath);
 xmlDoc.getElementsByTagName('marker_file').item(1).getFirstChild.setNodeValue(this.trcStaticPath);

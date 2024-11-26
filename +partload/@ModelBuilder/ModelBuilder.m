@@ -238,7 +238,7 @@ classdef ModelBuilder
 
         function scalingSetupFilePath = get.scalingSetupFilePath(obj)
             if ( isempty( obj.scalingSetupFilePath ) )
-                obj.scalingSetupFilePath = obj.getTemplatePath( 'scalingSetUp.xml' );
+                obj.scalingSetupFilePath = obj.getTemplatePath( 'scalingSetUp_4.xml' );
             end
             scalingSetupFilePath = obj.scalingSetupFilePath;
         end
@@ -269,11 +269,13 @@ classdef ModelBuilder
     methods
         [obj, newModelPath] = createPatientSpecificModel( obj )
         [obj, newModelPath] = runOpenSimScalingTool( obj )
+        [obj, newModelPath] = runAutomaticScalingTool(obj)
+        createTools(obj)
     end%methods
 
     % lower level pipeline methods
     methods(Access = protected)
-        prepareTRCFile( obj )
+        obj = prepareTRCFile( obj )
         c3dAdapter = alignC3DData( obj, c3dAdapter )
         setupFilePath = createSpecificScalingSetupFile( obj )
         obj = loadNewOpenSimModel(obj, overwrite)

@@ -32,14 +32,14 @@ else
 end
 
 if worklocal
-    dataDir = '/Users/jana/Downloads/Partload-Data';
+    dataDir = '/Users/jana/Documents/BME/Masterarbeit/partload/DataForOpenSim';
 else
     dataDir = fullfile(CEPHpath,'DATEN/FP/Partload/DataForMOLApp');
     % dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
 end
 
 sessToSimulate = {'Walk100'};
-subjectsToSimulate = {'PL04'};
+subjectsToSimulate = {'PL05'};
 % nfiles = 1:2; % process only one measurement; comment out for all
 
 subjects = struct;
