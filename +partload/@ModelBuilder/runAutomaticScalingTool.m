@@ -42,23 +42,25 @@ end
 import org.opensim.modeling.*;
 
 %% import input files
+tStart = cputime;
+copyfile(this.modelTemplatePath, this.modelDir);
 [~, fileName, fileExt] = fileparts(this.modelTemplatePath);
 BaseModelFile = strcat(fileName, fileExt);
-model = Model(this.modelTemplatePath);
+modelFolder = this.modelDir;
+model = Model(fullfile(modelFolder, BaseModelFile)); %starting unscaled model
 modelFile = regexprep(BaseModelFile, '.osim', '_itr.osim'); % changing name of the copy of the starting model
-model.print(fullfile(this.modelDir, modelFile)); % duplicate the generic model for running the iterations 
+model.print(fullfile(modelFolder,modelFile));% duplicate the generic model for running the iterations 
 for u=0:model.getJointSet.getSize-1 % for every joint
     for v=0:model.getJointSet.get(u).numCoordinates-1 % get every coordinate from every joint
-       model.getJointSet.get(u).get_coordinates(v).set_locked(model.getJointSet.get(u).get_coordinates(v).get_locked()) % check every coordinate
+       model.getJointSet.get(u).get_coordinates(v).set_locked(model.getJointSet.get(u).get_coordinates(v).get_locked())% check every coordinate
     end
 end
 
-[TRCFolder, fileName, ext] = fileparts(this.trcStaticPath);
-TRCFile = [fileName, ext];
+[TRCFolder, fileName, fileExt] = fileparts(this.trcStaticPath);
+TRCFile = strcat(fileName, fileExt);
+[StatTRC,HeadTRC,HeadTRC_XYZ] = this.load_trc(fullfile(TRCFolder, TRCFile));%loading the TRC file
 
-[StatTRC,HeadTRC,HeadTRC_XYZ] = this.load_trc(this.trcStaticPath); % loading the TRC file
-
-[~, fileName, fileExt] = fileparts(this.scalingIntermediateSetupFilePath);
+[startingSetupFolder, fileName, fileExt] = fileparts(this.scalingIntermediateSetupFilePath);
 SetupFile = strcat(fileName, fileExt);
 
 %% parameters to set
@@ -89,24 +91,21 @@ ind=0; % counter for flag used as a controller
 flag2=0;% flag2 =  if the tool is scaling with Manual scaing factor for all segments
 ind2=0;% counter for flag2 used as a controller
 
-% this.createTools
-    
-%% createTools
-% 
-% Scale tool: loading pre-existent scaling setup file then uploading it
-Scaler=ScaleTool(this.scalingIntermediateSetupFilePath); % opening the Scale tool
+
+%% Create Tools
+%% Scale tool: loading pre-existent scaling setup file then uploading it
+Scaler=ScaleTool(fullfile(startingSetupFolder,SetupFile)); % opening the Scale tool
 Array2=ArrayStr(); % defining array object
 Array2.append("measurements manualScale ");% initial setup has both manual and measurement scale
 Scaler.getModelScaler.setScalingOrder(Array2);% in the scaling order we want the array just created ("manualScale")
 ScaledFileName='ModelScaled_API.osim';%name of the Scaled model updated at every iteration
 Scaler.getModelScaler.setOutputModelFileName(ScaledFileName);%setting the name of the new scaled model
 Scaler.getGenericModelMaker.setModelFileName(modelFile); % set the generic model name in the scale tool
-Scaler.getMarkerPlacer.setMarkerFileName(TRCFile); %loading the TRC file with exp markers to use to perform the scaling factors
+Scaler.getMarkerPlacer.setMarkerFileName(TRCFile);%loading the TRC file with exp markers to use to perform the scaling factors
 time_range=Scaler.getModelScaler.getTimeRange; % get the time range frome initial scale setup file
 Scaler.getMarkerPlacer.setTimeRange(time_range); % set the time range
 Scaler.getMarkerPlacer.setApply(0); % make sure Markers won't be repositioned after scaling
-Scaler.print(this.scalingIntermediateSetupFilePath); % saving setup file
-
+Scaler.print(fullfile(startingSetupFolder,SetupFile)); % saving setup file
 %% Creation Ik tool for Static trial from Scaling setup
 IKSet=Scaler.getMarkerPlacer.getIKTaskSet;% getting IK Sets from Scaling setup
 ikTool = InverseKinematicsTool();% define the IK setup tool
@@ -114,17 +113,16 @@ ikTool.set_IKTaskSet(IKSet);%set Ik set previously retrieved
 ikTool.set_marker_file(TRCFile);% set the trial data .TRC 
 ikTool.set_report_marker_locations(1);% true on "Report_marker_location"
 CoordFileName=('Coord_Static.mot'); % name of Coordinates file
-ikTool.set_output_motion_file(fullfile(this.modelDir,CoordFileName));%setting path of output motion file
+ikTool.set_output_motion_file(fullfile(modelFolder,CoordFileName));%setting path of output motion file
 %TRCData=MarkerData(fullfile(TRCFolder,TRCFile)); % MarkerData object from TRC file
 ikTool.setStartTime(time_range.get(0));% getting initial time of scaling trial
 ikTool.setEndTime(time_range.get(1));% getting end time of scaling trial
-path_ik_static=fullfile(this.modelDir,'IkSetup(static_trial).xml');% path of ik setup file for scaling trial
+path_ik_static=fullfile(modelFolder,'IkSetup(static_trial).xml');% path of ik setup file for scaling trial
 ikTool.print(path_ik_static);%saving ik setup file for static trial
-   
 %% Creation of Scale tool with Manual scale factor if RMS erorr exceeds ManualScaleErr Threshold
 ScalerManual=Scaler; % new Scale tool 
-ScalerManual.setSubjectMass(this.modelMass);%set Subject mass
-ScalerManual.setSubjectHeight(this.modelHeight);% set subject height
+ScalerManual.setSubjectMass(SubjectWeight);%set Subject mass
+ScalerManual.setSubjectHeight(SubjectHeight);% set subject height
 NumBodies=model.getBodySet.getSize; % retrieving Number of bodies of the model
 % inserting manual scale factors for each body of the subject
 for m=0:NumBodies-1 % OpenSim starts from 0 not from 1
@@ -133,9 +131,9 @@ for m=0:NumBodies-1 % OpenSim starts from 0 not from 1
     scale.setSegmentName(model.getBodySet.get(m).getName); % set body name
     scale.setApply(1);% apply: true
 ScalerManual.getModelScaler.getScaleSet.cloneAndAppend(scale);% appending the scale factor on the scale set
-end%for
-   
-path_scaledFile=fullfile(this.modelDir,ScaledFileName);%path of scaled model
+end
+
+path_scaledFile=fullfile(modelFolder,ScaledFileName);%path of scaled model
 ScalerManual.getModelScaler.setOutputModelFileName(ScaledFileName);% setting the name of the new scaled model
 ScalerManual.getModelScaler.setPreserveMassDist(1); % preserve mass: true
 ScalerManual.getModelScaler.setMarkerFileName(TRCFile);%setting the TRC file name
@@ -145,18 +143,16 @@ Array=ArrayStr(); % defining array object
 Array.append("manualScale");% write inside array object
 ScalerManual.getModelScaler.setScalingOrder(Array);% in the scaling order we want the array just created ("manualScale")
 ScalerManual.getModelScaler.setTimeRange(time_range);%set the time range
-path_manualScale=fullfile(this.modelDir, 'ManualScaleSetup.xml');%define the manual scale setup file path 
+path_manualScale=fullfile(modelFolder, 'ManualScaleSetup.xml');%define the manual scale setup file path 
 ScalerManual.print(path_manualScale);  %save manual scale setup file
 
-
-%% determininig coordinate values
 if pose==1 % pose =1 means you have chosen to match the experimental pose
     ScaleTool(path_manualScale).run; %Run the manual scaling tool
-    ScaledModelFirst= Model(fullfile(this.modelDir,ScaledFileName)); % calling the Scaled model
+    ScaledModelFirst= Model(fullfile(modelFolder,ScaledFileName)); % calling the Scaled model
     ikCoord=InverseKinematicsTool(path_ik_static); % call back IK tool for static trial
     ikCoord.setModel(ScaledModelFirst); % set the Scaled model in the IK tool
     ikCoord.run; % run IK
-    [CoordData, Coordhead]=this.load_mot(fullfile(this.modelDir,CoordFileName));% load the just computed coordinates
+    [CoordData, Coordhead]=this.load_mot(fullfile(modelFolder,CoordFileName));% load the just computed coordinates
     CoordData=CoordData(:,2:end); % exclude time column from the IK result file
     AvgCoordData = deg2rad(mean(CoordData));% averaging coordinates over time and convert to radians
     AvgCoordData(4:6)=zeros(1,3); % The translation of the pelvis are set to 0 !!!!! To modify in case of different coordinates sequence of the model !!!!!
@@ -169,11 +165,12 @@ if pose==1 % pose =1 means you have chosen to match the experimental pose
             d=d+1;
         end
     end
-    model.print(fullfile(this.modelDir,modelFile));%save the model with new coordinates
+    model.print(fullfile(modelFolder,modelFile));%save the model with new coordinates
 end
 markerset=model.getMarkerSet; % getting the generic markerset from unscaled model
-markerset.print(fullfile(this.modelDir,'MarkerSet.xml')); % printing the markerset
+markerset.print(fullfile(modelFolder,'MarkerSet.xml')); % printing the markerset
 Nmarkers=markerset.getSize;% retrive number of markers
+
 
 
 %% AST_core_v1
@@ -193,7 +190,7 @@ while true % iterate until the stop condition at the end of script
         end
     end
     if k==1 % at  first iteration
-        ScaleTool(this.scalingIntermediateSetupFilePath).run; % Run scale setup file at first iteration
+        ScaleTool(fullfile(modelFolder,SetupFile)).run; % Run scale setup file at first iteration
     elseif k > 1 % for iterations > 1
         if RMSErr(k-1) > ManualScaleErr && flag==0 || flag2==1 % condition to scale with all segments = mean scaling factor.
             ind2=ind2+1;
@@ -220,15 +217,15 @@ while true % iterate until the stop condition at the end of script
             end
             clear NamesBodyManual
         else
-            ScaleTool(fullfile(this.modelDir, SetupFile)).run ;% scale the model with the settings in the scale tool setup
+            ScaleTool(fullfile(modelFolder, SetupFile)).run ;% scale the model with the settings in the scale tool setup
         end
     end
     % IK
     ikTool=InverseKinematicsTool(path_ik_static); % call back IK tool for static trial
-    ScaledModel= Model(fullfile(this.modelDir,ScaledFileName)); % calling the Scaled model
+    ScaledModel= Model(fullfile(modelFolder,ScaledFileName)); % calling the Scaled model
     ikTool.setModel(ScaledModel); % set the Scaled model in the IK tool
     ikTool.run; % run IK
-    [MarkerLocation, HeadSTO]=this.load_sto(fullfile(this.modelDir,'_ik_model_marker_locations.sto')); %loading the Model markers locations in output from IK
+    [MarkerLocation, HeadSTO]=this.load_sto(fullfile(modelFolder,'_ik_model_marker_locations.sto')); %loading the Model markers locations in output from IK
     %% obtaining the list of selected markers for the scaling (Markers True in IK Setup file)
     for i = 1:length(HeadSTO)-1 % do not consider time position in the HeadSTO vector
         SelectedMarker(i)=HeadSTO(i+1); % storing markers names
@@ -325,7 +322,7 @@ while true % iterate until the stop condition at the end of script
                 end
             end
         end
-        path_ScalerMix=fullfile(this.modelDir,'ScalerMix.xml');
+        path_ScalerMix=fullfile(modelFolder,'ScalerMix.xml');
         ScalerMix.print(path_ScalerMix);
     end
     %% increment to change the marker coordinate affected by the max error
@@ -364,7 +361,7 @@ while true % iterate until the stop condition at the end of script
     GenericMarker.changeFramePreserveLocation(state,SockName);%change from ground to local coordinate system
     model.updModel; %updt model
     markerset.connectToModel(model) % maybe this line is not useful
-    model.print(fullfile(this.modelDir,modelFile));%Save the model with new markerset
+    model.print(fullfile(modelFolder,modelFile));%Save the model with new markerset
     disp(['cycle #', num2str(k),' RMS Error:', num2str(RMSErr(k)), ' Max Error:', num2str(err(k)), ' Coord:', ToChange{1,1}, ' increment:' num2str(s*step(k))]);
     %% end condition of while loop
     if RMSErr(k) < EndErr || k>Km && RMSErr(k) > RMSErr(k-1) && flag==0 && flag2==0 % end codition for RMSE and iterations
@@ -374,42 +371,50 @@ while true % iterate until the stop condition at the end of script
     if flag==0
         clear Str
     end
-    save(fullfile(this.modelDir, 'err.mat'), 'err')
-    save(fullfile(this.modelDir, 'RMSErr.mat'), 'RMSErr')
+    save(fullfile(modelFolder, 'err.mat'), 'err')
+    save(fullfile(modelFolder, 'RMSErr.mat'), 'RMSErr')
 end
 
 %% create the final scaled model with marker placement
 if ManualBodies~=0
     AdjScaler=ScaleTool(path_ScalerMix);
 else 
-    AdjScaler=ScaleTool(fullfile(this.modelDir,SetupFile));%New scale tool with marker adjustments
+    AdjScaler=ScaleTool(fullfile(modelFolder,SetupFile));%New scale tool with marker adjustments
 end
 AdjScaler.getGenericModelMaker.setModelFileName(modelFile);
 AdjScaler.getMarkerPlacer.setApply(1);%repositioning markers after scaling
 AdjScaler.getMarkerPlacer.setOutputModelFileName(name_ModelScaledAdj);%set the scaled model name
-path_SetupScaleAdj=fullfile(this.modelDir, 'ScalingSetupMarkerAdj.xml');
+path_SetupScaleAdj=fullfile(modelFolder, 'ScalingSetupMarkerAdj.xml');
 AdjScaler.print(path_SetupScaleAdj); %save setup file
 ScaleTool(path_SetupScaleAdj).run; %create model
-modelScaledUnlocked=UnlockModel(this.modelDir,name_ModelScaledAdj);% unblocking coordinates to scaled model if at least one locked coordinate has been detected
+modelScaledUnlocked=this.UnlockModel(modelFolder,name_ModelScaledAdj);% unblocking coordinates to scaled model if at least one locked coordinate has been detected
 tEnd=cputime;
 ElapsedTime=tEnd-tStart;
 
 tempo_exc = toc;
 tempo_minuti_exc = tempo_exc/60;
 
-
-
 % run scaling tool
-scaleTool = org.opensim.modeling.ScaleTool( scalingSetupFile );
-scaleTool.setName( this.modelName );
-scaleTool.setPathToSubject('');
-scaleTool.run;
+% scaleTool = org.opensim.modeling.ScaleTool( scalingSetupFile );
+% scaleTool.setName( this.modelName );
+% scaleTool.setPathToSubject('');
+% scaleTool.run;
 
 % Save the scaled model
-this = this.loadNewOpenSimModel;
-this.osModel.print(this.newModelPath);
+% this = this.loadNewOpenSimModel;
+% this.osModel.print(this.newModelPath);
 % return path of new model
-newModelPath = this.newModelPath;
+% newModelPath = this.newModelPath;
+
+newModelPath = fullfile(this.modelDir, name_ModelScaledAdj);
+
+% rename ModelScaledAdj.osim to PLxx.osim
+finalModelName = [this.modelName, '.osim'];
+model1 = fullfile(this.modelDir, name_ModelScaledAdj);
+model2 = fullfile(this.modelDir, finalModelName);
+movefile(model1, model2);
+% movefile('/Users/jana/matlab-output/partload-opensim/PL05/model/ModelScaledMarkerAdj.osim', '/Users/jana/matlab-output/partload-opensim/PL05/model/PL05.osim')
+
 
 % set InitialScaling factor
 this.InitialScaling = true;

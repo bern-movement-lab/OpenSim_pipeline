@@ -28,6 +28,6 @@ obj = obj.runAutomaticScalingTool();
 disp('Finished creating subject specific model');
 
 % return path of new model
-newModelPath = obj.newModelPath;
+% newModelPath = obj.newModelPath;
 
 end

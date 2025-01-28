@@ -42,21 +42,32 @@ xmlDoc.getElementsByTagName('height').item(0).getFirstChild.setNodeValue(num2str
 xmlDoc.getElementsByTagName('output_model_file').item(0).getFirstChild.setNodeValue(this.newModelPath);
 xmlDoc.getElementsByTagName('output_model_file').item(1).getFirstChild.setNodeValue(this.newModelPath);
 
-%% write xml
+%% write xml (without AST)
 
-setupFilesDir = fullfile(this.modelDir, 'setupFiles');
+% setupFilesDir = fullfile(this.modelDir, 'setupFiles');
+% 
+% if ~exist(setupFilesDir, 'dir')
+%     mkdir (setupFilesDir);
+% end
+% 
+% if this.InitialScaling == false
+%     setupFilePath = fullfile( setupFilesDir, [ this.modelName '_IntermediateScaleSetUp.xml'] );
+% 
+% elseif this.InitialScaling == true
+%     setupFilePath = fullfile( setupFilesDir, [ this.modelName '_FinalScaleSetUp.xml'] );
+% end
+% 
+% xmlwrite(setupFilePath, xmlDoc);
 
-if ~exist(setupFilesDir, 'dir')
-    mkdir (setupFilesDir);
-end
+%% write xml (AST)
 
 if this.InitialScaling == false
-    setupFilePath = fullfile( setupFilesDir, [ this.modelName '_IntermediateScaleSetUp.xml'] );
-    
+    setupFilePath = fullfile( this.modelDir, [ this.modelName '_IntermediateScaleSetUp.xml'] );
+
 elseif this.InitialScaling == true
-    setupFilePath = fullfile( setupFilesDir, [ this.modelName '_FinalScaleSetUp.xml'] );
-end
+    setupFilePath = fullfile( this.modelDir, [ this.modelName '_FinalScaleSetUp.xml'] );
+end%if
 
 xmlwrite(setupFilePath, xmlDoc);
 
-end
+end%function

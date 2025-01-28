@@ -39,7 +39,7 @@ else
 end
 
 sessToSimulate = {'Walk100'};
-subjectsToSimulate = {'PL05'};
+subjectsToSimulate = {'PL02'};
 % nfiles = 1:2; % process only one measurement; comment out for all
 
 subjects = struct;
@@ -165,6 +165,11 @@ for condIdx = 1:numel(condflds)
                                     stoFiles(stoFileIdx).name));
                                 % export sto data to csv
                                 exportTable_sto = struct2table(stoData.Data);
+                                if contains(stoFiles(stoFileIdx).name, 'activation') % rename columns of muscle activation data
+                                    columnNames = exportTable_sto.Properties.VariableNames;
+                                    columnNames(2:end) = strcat(columnNames(2:end), '_activation');
+                                    exportTable_sto.Properties.VariableNames = columnNames;
+                                end
                                 [~, orgFileName, ~] = fileparts(stoFiles(stoFileIdx).name);
                                 fileName = fullfile(stoFiles(stoFileIdx).folder, ...
                                     [orgFileName, '.csv']);
