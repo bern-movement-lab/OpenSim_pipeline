@@ -38,8 +38,8 @@ else
     % dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
 end
 
-sessToSimulate = {'Walk100'};
-subjectsToSimulate = {'PL02'};
+sessToSimulate = {'Walk100', 'Walk50'};
+subjectsToSimulate = {'PL06'};
 % nfiles = 1:2; % process only one measurement; comment out for all
 
 subjects = struct;
