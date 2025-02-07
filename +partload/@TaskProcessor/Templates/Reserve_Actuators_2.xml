@@ -135,7 +135,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_flexion_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="hip_adduction_r_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -147,7 +147,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_adduction_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="hip_rotation_r_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -159,7 +159,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_rotation_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="knee_angle_r_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -171,7 +171,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>knee_angle_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="ankle_angle_r_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -183,7 +183,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>ankle_angle_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="subtalar_angle_r_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -195,7 +195,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>subtalar_angle_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="mtp_angle_r_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -219,7 +219,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_flexion_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="hip_adduction_l_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -231,7 +231,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_adduction_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="hip_rotation_l_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -243,7 +243,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_rotation_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="knee_angle_l_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -255,7 +255,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>knee_angle_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="ankle_angle_l_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -267,7 +267,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>ankle_angle_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="subtalar_angle_l_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -279,7 +279,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>subtalar_angle_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="mtp_angle_l_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -303,7 +303,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>lumbar_extension</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="lumbar_bending_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -315,7 +315,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>lumbar_bending</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="lumbar_rotation_reserve">
 				<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
@@ -327,7 +327,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>lumbar_rotation</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>1</optimal_force>
+				<optimal_force>10</optimal_force>
 			</CoordinateActuator>
         </objects>
         <groups />

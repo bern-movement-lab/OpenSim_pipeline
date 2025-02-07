@@ -38,7 +38,7 @@ else
     % dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
 end
 
-sessToSimulate = {'Walk100', 'Walk50'};
+sessToSimulate = {'Walk100'};
 subjectsToSimulate = {'PL06'};
 % nfiles = 1:2; % process only one measurement; comment out for all
 
@@ -58,9 +58,7 @@ for subjectIdx = 1:numel(subjectDir)
                         % subjectCtr = subjectCtr + 1;
                         subjects.(dirContent(dirContentIdx).name)(subjectCtr) = ...
                             partload.Subject('subjectId', subjectId);
-                        if ~exist('nfiles','var')
-                            nfiles = 1:numel(files);
-                        end%if
+                        nfiles = 1:numel(files);
                         for filesIdx = nfiles
                             if contains(files(filesIdx).name, 'static')
                                 subjects.(dirContent(dirContentIdx).name)(subjectCtr).staticFilePath = fullfile(...
