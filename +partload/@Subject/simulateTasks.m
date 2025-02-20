@@ -48,7 +48,28 @@ for i=1:numel(tasks)
 
     % set range of data as set by region of interest in Nexus
     task.frameRange = [c3d.header.points.firstFrame, c3d.header.points.lastFrame];
-%     task.frameRange = [0, (c3d.header.points.lastFrame -c3d.header.points.firstFrame)];
+
+    % set time range to region of interest
+    eventTimes = c3d.parameters.EVENT.TIMES.DATA;
+    eventLabels = c3d.parameters.EVENT.LABELS.DATA;
+
+    if ~isempty(eventLabels)
+        eventData = struct();
+        for idx = 1:length(eventLabels)
+            eventname = eventLabels{idx};
+            eventname = erase(eventname, ' ');
+            eventname = erase(eventname, '-');
+
+            if isfield(eventData, eventname)
+                eventData.(eventname)(length(eventData.(eventname))+1) = eventTimes(2,idx);
+            else
+                eventData.(eventname)(1) = eventTimes(2,idx);
+            end%if
+        end%for
+    end%if
+
+    eventData.FootStrike = sort(eventData.FootStrike);
+    eventData.FootOff = sort(eventData.FootOff);
     
     taskProcessor = partload.TaskProcessor(...
         'outputDir', obj.outputDir, ...
@@ -61,6 +82,8 @@ for i=1:numel(tasks)
         'labRotation', obj.labRotation...
         );
     
+    % taskProcessor.timeRange = [eventData.FootStrike(1,1), eventData.FootStrike(1,4)];
+
     if ~isempty(task.leftForceplateIDs)
         taskProcessor.leftForceplateIDs = task.leftForceplateIDs;
     end

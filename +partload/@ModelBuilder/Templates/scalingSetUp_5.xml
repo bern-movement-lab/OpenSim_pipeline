@@ -25,7 +25,7 @@
 			<!--Specifies the measurements by which body segments are to be scaled.-->
 			<MeasurementSet>
 				<objects>
-                    <Measurement name="pelvis_xz">
+                    <Measurement name="pelvis_xy">
 						<!--Flag to turn on and off scaling for this measurement.-->
 						<apply>true</apply>
 						<!--Set of marker pairs used to determine the scale factors.-->
@@ -46,14 +46,14 @@
 							<objects>
 								<BodyScale name="pelvis">
 									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
-									<axes>X Z</axes>
+									<axes>X Y</axes>
 								</BodyScale>
 							</objects>
 							<groups />
 						</BodyScaleSet>
 					</Measurement>
 
-                    <Measurement name="pelvis_y">
+                    <Measurement name="pelvis_z">
 						<!--Flag to turn on and off scaling for this measurement.-->
 						<apply>true</apply>
 						<!--Set of marker pairs used to determine the scale factors.-->
@@ -70,7 +70,7 @@
 							<objects>
 								<BodyScale name="pelvis">
 									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
-									<axes>Y</axes>
+									<axes>Z</axes>
 								</BodyScale>
 							</objects>
 							<groups />
@@ -86,14 +86,6 @@
 								<MarkerPair>
 									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
 									<markers> RHJC RKJC</markers>
-								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> RASI RKNE</markers>
-								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> RASI RKNM</markers>
 								</MarkerPair>
 							</objects>
 							<groups />
@@ -145,14 +137,6 @@
 									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
 									<markers> LHJC LKJC</markers>
 								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> LASI LKNE</markers>
-								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> LASI LKNM</markers>
-								</MarkerPair>
 							</objects>
 							<groups />
 						</MarkerPairSet>
@@ -203,14 +187,6 @@
 									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
 									<markers> RKJC RAJC</markers>
 								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> RKNE RANK</markers>
-								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> RKNM RMED</markers>
-								</MarkerPair>
 							</objects>
 							<groups />
 						</MarkerPairSet>
@@ -234,11 +210,7 @@
 							<objects>
 								<MarkerPair>
 									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> RKNE RKNM</markers>
-								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> RANK RMED</markers>
+									<markers> RMED RANK</markers>
 								</MarkerPair>
 							</objects>
 							<groups />
@@ -265,14 +237,6 @@
 									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
 									<markers> LKJC LAJC</markers>
 								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> LKNE LANK</markers>
-								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> LKNM LMED</markers>
-								</MarkerPair>
 							</objects>
 							<groups />
 						</MarkerPairSet>
@@ -296,10 +260,6 @@
 							<objects>
 								<MarkerPair>
 									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> LKNE LKNM</markers>
-								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
 									<markers> LANK LMED</markers>
 								</MarkerPair>
 							</objects>
@@ -317,7 +277,7 @@
 						</BodyScaleSet>
 					</Measurement>
 
-					<Measurement name="talus">
+					<Measurement name="foot_r_xz">
 						<!--Flag to turn on and off scaling for this measurement.-->
 						<apply>true</apply>
 						<!--Set of marker pairs used to determine the scale factors.-->
@@ -325,11 +285,7 @@
 							<objects>
 								<MarkerPair>
 									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> RKNE RANK</markers>
-								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> LKNE LANK</markers>
+									<markers> RTOE RHEE</markers>
 								</MarkerPair>
 							</objects>
 							<groups />
@@ -339,18 +295,22 @@
 							<objects>
 								<BodyScale name="talus_r">
 									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
-									<axes>X Y Z</axes>
+									<axes>X Z</axes>
 								</BodyScale>
-								<BodyScale name="talus_l">
+								<BodyScale name="calcn_r">
 									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
-									<axes>X Y Z</axes>
+									<axes>X Z</axes>
+								</BodyScale>
+								<BodyScale name="toes_r">
+									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
+									<axes>X Z</axes>
 								</BodyScale>
 							</objects>
 							<groups />
 						</BodyScaleSet>
 					</Measurement>
 
-                    <Measurement name="foot">
+                    <Measurement name="foot_l_xz">
 						<!--Flag to turn on and off scaling for this measurement.-->
 						<apply>true</apply>
 						<!--Set of marker pairs used to determine the scale factors.-->
@@ -358,11 +318,7 @@
 							<objects>
 								<MarkerPair>
 									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> RHEE RTOE</markers>
-								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> LHEE LTOE</markers>
+									<markers> LTOE LHEE</markers>
 								</MarkerPair>
 							</objects>
 							<groups />
@@ -370,27 +326,88 @@
 						<!--Set of bodies to be scaled by this measurement.-->
 						<BodyScaleSet>
 							<objects>
-								<BodyScale name="calcn_r">
+								<BodyScale name="talus_l">
 									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
-									<axes>X Y Z</axes>
+									<axes>X Z</axes>
 								</BodyScale>
 								<BodyScale name="calcn_l">
 									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
-									<axes>X Y Z</axes>
-								</BodyScale>
-								<BodyScale name="toes_r">
-									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
-									<axes>X Y Z</axes>
+									<axes>X Z</axes>
 								</BodyScale>
 								<BodyScale name="toes_l">
 									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
-									<axes>X Y Z</axes>
+									<axes>X Z</axes>
+								</BodyScale>
+							</objects>
+							<groups />
+						</BodyScaleSet>
+					</Measurement>			
+
+					<Measurement name="foot_r_y">
+						<!--Flag to turn on and off scaling for this measurement.-->
+						<apply>true</apply>
+						<!--Set of marker pairs used to determine the scale factors.-->
+						<MarkerPairSet>
+							<objects>
+								<MarkerPair>
+									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
+									<markers> RAJC RHEE</markers>
+								</MarkerPair>
+							</objects>
+							<groups />
+						</MarkerPairSet>
+						<!--Set of bodies to be scaled by this measurement.-->
+						<BodyScaleSet>
+							<objects>
+								<BodyScale name="talus_r">
+									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
+									<axes>Y</axes>
+								</BodyScale>
+								<BodyScale name="calcn_r">
+									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
+									<axes>Y</axes>
+								</BodyScale>
+								<BodyScale name="toes_r">
+									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
+									<axes>Y</axes>
 								</BodyScale>
 							</objects>
 							<groups />
 						</BodyScaleSet>
 					</Measurement>
 
+                    <Measurement name="foot_l_y">
+						<!--Flag to turn on and off scaling for this measurement.-->
+						<apply>true</apply>
+						<!--Set of marker pairs used to determine the scale factors.-->
+						<MarkerPairSet>
+							<objects>
+								<MarkerPair>
+									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
+									<markers> LAJC LHEE</markers>
+								</MarkerPair>
+							</objects>
+							<groups />
+						</MarkerPairSet>
+						<!--Set of bodies to be scaled by this measurement.-->
+						<BodyScaleSet>
+							<objects>
+								<BodyScale name="talus_l">
+									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
+									<axes>Y</axes>
+								</BodyScale>
+								<BodyScale name="calcn_l">
+									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
+									<axes>Y</axes>
+								</BodyScale>
+								<BodyScale name="toes_l">
+									<!--Axes (X Y Z) along which to scale a body. For example, 'X Y Z' scales along all three axes, and 'Y' scales just along the Y axis.-->
+									<axes>Y</axes>
+								</BodyScale>
+							</objects>
+							<groups />
+						</BodyScaleSet>
+					</Measurement>							
 				</objects>
 				<groups />
 			</MeasurementSet>
@@ -585,9 +602,41 @@
 						<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
 						<weight>1000</weight>
 					</IKMarkerTask>
+					<IKCoordinateTask name="subtalar_angle_l">
+						<!--Whether or not this task will be used during inverse kinematics solve.-->
+						<apply> false </apply>
+						<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
+						<weight>1000</weight>
+						<!--Indicates the source of the coordinate value for this task.  Possible
+						    values are default_value (use default value of coordinate, as
+						    specified in the model file, as the fixed target value), manual_value
+						    (use the value specified in the value property of this task as the
+						    fixed target value), or from_file (use the coordinate values from the
+						    coordinate data specified by the coordinates_file property).-->
+						<value_type> default_value </value_type>
+						<!--This value will be used as the desired (or prescribed) coordinate
+						    value if value_type is set to manual_value.-->
+						<value>       0.00000000 </value>
+					</IKCoordinateTask>
+					<IKCoordinateTask name="subtalar_angle_r">
+						<!--Whether or not this task will be used during inverse kinematics solve.-->
+						<apply> false </apply>
+						<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
+						<weight>1000</weight>
+						<!--Indicates the source of the coordinate value for this task.  Possible
+						    values are default_value (use default value of coordinate, as
+						    specified in the model file, as the fixed target value), manual_value
+						    (use the value specified in the value property of this task as the
+						    fixed target value), or from_file (use the coordinate values from the
+						    coordinate data specified by the coordinates_file property).-->
+						<value_type> default_value </value_type>
+						<!--This value will be used as the desired (or prescribed) coordinate
+						    value if value_type is set to manual_value.-->
+						<value>       0.00000000 </value>
+					</IKCoordinateTask>
 					<IKCoordinateTask name="mtp_angle_l">
 						<!--Whether or not this task will be used during inverse kinematics solve.-->
-						<apply> true </apply>
+						<apply> false </apply>
 						<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
 						<weight>1000</weight>
 						<!--Indicates the source of the coordinate value for this task.  Possible
@@ -603,7 +652,7 @@
 					</IKCoordinateTask>
 					<IKCoordinateTask name="mtp_angle_r">
 						<!--Whether or not this task will be used during inverse kinematics solve.-->
-						<apply> true </apply>
+						<apply> false </apply>
 						<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
 						<weight>1000</weight>
 						<!--Indicates the source of the coordinate value for this task.  Possible
