@@ -39,7 +39,7 @@ else
 end
 
 sessToSimulate = {'Walk100'};
-subjectsToSimulate = {'PL07'};
+subjectsToSimulate = {'PL04'};
 % nfiles = 1:2; % process only one measurement; comment out for all
 
 subjects = struct;

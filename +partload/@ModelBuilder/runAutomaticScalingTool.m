@@ -75,7 +75,7 @@ pose = 1; % Pose estimation
 MeanScaleFactY = SubjectHeight/GenericModelHeight; % mean manual scale factor = heights ratio
 MeanScaleFact = Vec3(MeanScaleFactY); % from vector to Vec3
 
-name_ModelScaledAdj = this.modelName; % Name of the final scaled model
+name_ModelScaledAdj = [this.modelName, '.osim']; % Name of the final scaled model
 
 %% Setup Tool user paramenters
 Km=400; % iterations Threshold: number of iterations 

@@ -238,7 +238,7 @@ classdef ModelBuilder
 
         function scalingSetupFilePath = get.scalingSetupFilePath(obj)
             if ( isempty( obj.scalingSetupFilePath ) )
-                obj.scalingSetupFilePath = obj.getTemplatePath( 'scalingSetUp_4.xml' );
+                obj.scalingSetupFilePath = obj.getTemplatePath( 'scalingSetUp_5.xml' );
             end
             scalingSetupFilePath = obj.scalingSetupFilePath;
         end
