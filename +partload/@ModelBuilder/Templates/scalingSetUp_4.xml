@@ -479,7 +479,7 @@
 					</IKCoordinateTask>
 					<IKCoordinateTask name="mtp_angle_l">
 						<!--Whether or not this task will be used during inverse kinematics solve.-->
-						<apply> false </apply>
+						<apply> true </apply>
 						<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
 						<weight>1000</weight>
 						<!--Indicates the source of the coordinate value for this task.  Possible
@@ -495,7 +495,7 @@
 					</IKCoordinateTask>
 					<IKCoordinateTask name="mtp_angle_r">
 						<!--Whether or not this task will be used during inverse kinematics solve.-->
-						<apply> false </apply>
+						<apply> true </apply>
 						<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
 						<weight>1000</weight>
 						<!--Indicates the source of the coordinate value for this task.  Possible

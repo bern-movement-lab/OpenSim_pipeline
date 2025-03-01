@@ -75,7 +75,7 @@ pose = 1; % Pose estimation
 MeanScaleFactY = SubjectHeight/GenericModelHeight; % mean manual scale factor = heights ratio
 MeanScaleFact = Vec3(MeanScaleFactY); % from vector to Vec3
 
-name_ModelScaledAdj = [this.modelName, '.osim']; % Name of the final scaled model
+name_ModelScaledAdj = 'ModelScaledMarkerAdj.osim'; % Name of the final scaled model
 
 %% Setup Tool user paramenters
 Km=400; % iterations Threshold: number of iterations 
@@ -408,6 +408,13 @@ tempo_minuti_exc = tempo_exc/60;
 % newModelPath = this.newModelPath;
 
 newModelPath = fullfile(this.modelDir, name_ModelScaledAdj);
+
+% rename ModelScaledAdj.osim to PLxx.osim
+finalModelName = [this.modelName, '.osim'];
+model1 = fullfile(this.modelDir, name_ModelScaledAdj);
+model2 = fullfile(this.modelDir, finalModelName);
+movefile(model1, model2);
+% movefile('/Users/jana/matlab-output/partload-opensim/PL05/model/ModelScaledMarkerAdj.osim', '/Users/jana/matlab-output/partload-opensim/PL05/model/PL05.osim')
 
 % set InitialScaling factor
 this.InitialScaling = true;

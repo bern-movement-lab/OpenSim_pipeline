@@ -41,6 +41,9 @@ c3dAdapter.writeTRC();
 
 t0 = c3dAdapter.markers.data.Time(1);
 t1 = c3dAdapter.markers.data.Time(end);
+if t1 > 2
+    t1 = 2;
+end
 obj.scalingTimeRange = [t0 t1];
 
 end

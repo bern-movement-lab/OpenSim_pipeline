@@ -34,7 +34,7 @@ end
 if worklocal
     dataDir = '/Users/jana/Documents/BME/Masterarbeit/partload/DataForOpenSim';
 else
-    dataDir = fullfile(CEPHpath,'DATEN/FP/Partload/DataForMOLApp');
+    dataDir = fullfile(CEPHpath,'/DATEN/FP/Partload/DataForOpenSim');
     % dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
 end
 
