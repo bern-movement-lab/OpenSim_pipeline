@@ -22,8 +22,11 @@ line = fgetl(fid);  %x-y-z
 count = 1;
 while (~feof(fid))
     line = fgetl(fid);
-    dd = textscan(line,'%f');
-    data(count,:) = dd{1,1}';
-    count = count + 1;
+    if ~isempty(line)
+        dd = textscan(line,'%f');
+        data(count,:) = dd{1,1}';
+        count = count + 1;
+    end
+    
 end
 end

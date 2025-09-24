@@ -38,10 +38,13 @@ classdef Subject
     %                           belong to the subject and should be
     %                           simulated/processed.
     %
+    %   modelAge             - [1x1 double] Age of the subject in years.
+    %
     %   Package: partload
     %
     %   Author(s):      Lukas Connolly (Balgrist Campus, 2020),
-    %                   Cedric Rauber (Universität Bern, 2022)
+    %                   Cedric Rauber (Universität Bern, 2022),
+    %                   Michael Streit (BFH/Uni Bern, 2025)
 
     properties
         subjectId % [1x1 string] Subject ID.
@@ -105,11 +108,11 @@ classdef Subject
         end
 
         function obj = set.outputDir(obj, outputDir)
-            if( exist(outputDir, 'dir') )
-                obj.outputDir = outputDir;
-            else
-                error( 'Error: The outputDir directory does not exist' );
+            if(~exist(outputDir, 'dir') )
+                mkdir(outputDir);
+                warning('warning: The output directory does not exist, the folder (%s) was created!',outputDir );
             end
+            obj.outputDir = outputDir;
         end
 
         function obj = set.modelMass(obj, modelMass)
@@ -154,15 +157,7 @@ classdef Subject
             if ~isempty(obj.outputDir)
                 outputDir = obj.outputDir;
             else
-                %                 outputDir = pwd;
-                %                 outputDir = 'P:\DATEN\FP\Partload\OpenSimData';
-                if isunix && ~ismac
-                    outputDir = '/home/patric/fast/matlab-output/partload-opensim';
-                elseif isunix && ismac
-                    outputDir = '/Users/jana/matlab-output/partload-opensim';
-                else
-                    outputDir = 'C:\Users\patric\matlab-output\partload-opensim';
-                end
+                error("Outputdirectory not defined");
             end
         end
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipelineConfig>
+
+    <!-- Choose subjects -->
+    <!-- Example: PLS01,PLS02,PLS03,PLS04,PLS05,PLS06,PLS08,PLS09,PLS10,PLS11,PLS12,PLS13,PLS14,PLS15,PLS16,PLS17,PLS18,PLS19,PLS20,PLS21 -->
+    <subjects>PL02,PL03,PL04</subjects>
+
+    <!-- Choose sessions -->
+    <!-- Example: Walk20_down,Walk20_up,Walk50_down,Walk50_up,Walk75_down,Walk75_up,Walk100_down,Walk100_up -->
+    <sessions>Walk100</sessions>
+
+    <!-- Select input and output path  -->
+    <paths>
+        <!-- Input data folder -->
+        <!-- Example (network/cluster):  /home/USERNAME/mounts/g/Research-PHY/DATEN/FP/Partload/DataForMOLApp  -->
+        <!-- Example (local):            /home/USERNAME/PROJECT/DataForMOLApp  -->
+        <inputPath>/home/michael_dev/mounts/g/Research-PHY/DATEN/FP/Partload/DataForMOLApp</inputPath>
+
+        <!-- Output results folder -->
+        <!-- Example (network/cluster): /home/USERNAME/mounts/g/Research-PHY/DATEN/FP/Partload/ResultsFromOpenSim/partload-opensim  -->
+        <!-- Example (local):           /home/USERNAME/PROJECT/ResultsFromOpenSim/partload-opensim -->
+        <outputDir>/home/michael_dev/BFH_dev/ResultsFromOpenSim/partload-opensim</outputDir>
+    </paths>
+
+    <!-- Define the location of the dependencies  -->
+    <dependencies>
+        <ezc3d>/home/michael_dev/BFH_dev/ezc3d_Linux</ezc3d>
+        <tlsm>/home/michael_dev/BFH_dev/tlsm</tlsm>
+        <mat2os>/home/michael_dev/BFH_dev/mat2os</mat2os>
+    </dependencies>
+
+</pipelineConfig>

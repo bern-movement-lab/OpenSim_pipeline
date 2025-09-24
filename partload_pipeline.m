@@ -1,53 +1,77 @@
-%% partload pipeline
+%% partload_pipeline
+% partload_pipeline - Complete analysis pipeline for processing subject data.
+%
+%   This script loads project configuration and subject data, builds
+%   subject-specific OpenSim models, and runs inverse kinematics (IK)
+%   and inverse dynamics (ID) simulations. The results are exported
+%   to .csv files for further analysis.
+%
+%   Workflow:
+%       1. adapt the configuration file for your needs
+%       2. Run this script
+%
+%   Configuration:
+%   The pipeline relies on an XML configuration file defining paths,
+%   sessions, and subjects to simulate.
+%
+%   Dependencies:
+%       - OpenSim (Java interface)
+%       - ezc3d (C3D file reader)
+%       - tlsm   (Model building and task simulation)
+%       - mat2os (MATLAB to OpenSim interface)
+%
+%   Input:
+%       - Motion capture data in .c3d format
+%
+%   Output:
+%       - Subject-specific OpenSim models (.osim)
+%       - Inverse dynamics results (.csv, .sto, .log)
+%       - Inverse kinematics results (.csv, .mot, .log)
+%       - Joint Reaction Analysis results (.csv, .sto, .log)
+%       - Static optimization results (.csv, .sto)
+%       - Exported .csv files for analysis
+%
+%
+%   Author(s):      Philippe Bähler (BFH/Uni Bern, 2024),
+%                   Jana Ender (BFH/ETH, 2024),
+%                   Michael Streit (BFH/Uni Bern, 2025)
+
 
 %% Init
 close all;
 clear all;
-clc;
-worklocal = true;
+clc;      
 
-import org.opensim.modeling.* 
+
+import org.opensim.modeling.*      % Import OpenSim Libraries
 myMatlabLog = JavaLogSink();
-Logger.addSink(myMatlabLog);
+Logger.addSink(myMatlabLog)
+
 
 %% Load the project data into a subject
-if isunix && ~ismac
-    if worklocal
-        disp('not yet handled')
-    else
-        CEPHpath = '/home/patric/mounts/research-PHY';
-    end
-elseif isunix && ismac
-    if worklocal
-        disp('not yet handled')
-    else
-        CEPHpath = '/Volumes/Research-PHY';
-    end
-else
-    if worklocal
-        CEPHpath = 'C:\localdata\PartloadDataForMOLApp';
-    else
-        CEPHpath = ['\\bfh.ch'];
-    end
+
+% adjust the configuartion file for your task
+cfg = readstruct('partload_pipeline_configuration.xml');
+cfg = convertContainedStringsToChars(cfg);
+
+if ~exist(cfg.paths.inputPath)
+    error("Input Path does not exist")
 end
 
-if worklocal
-    dataDir = '/Users/jana/Documents/BME/Masterarbeit/partload/DataForOpenSim';
-else
-    dataDir = fullfile(CEPHpath,'/DATEN/FP/Partload/DataForOpenSim');
-    % dataDir = 'P:\DATEN\FP\Partload\ViconDataPROC';
-end
+addpath(cfg.dependencies.ezc3d);
+addpath(cfg.dependencies.tlsm);
+addpath(cfg.dependencies.mat2os);
 
-sessToSimulate = {'Walk100'};
-subjectsToSimulate = {'PL04'};
+sessToSimulate = strtrim(strsplit(cfg.sessions, ','));
+subjectsToSimulate = strtrim(strsplit(cfg.subjects, ','));
 % nfiles = 1:2; % process only one measurement; comment out for all
 
 subjects = struct;
-subjectDir = dir(dataDir);
+subjectDir = dir(cfg.paths.inputPath);
 subjectCtr = 1;
 for subjectIdx = 1:numel(subjectDir)
     subjectId = subjectDir(subjectIdx).name;
-    if contains(subjectId, 'PL') && contains(subjectsToSimulate, subjectId)
+    if contains(subjectId, 'PL') && any(contains(subjectsToSimulate, subjectId))
         dirContent = dir(fullfile(subjectDir(subjectIdx).folder, subjectId));
         for dirContentIdx = 1:numel(dirContent)
             if dirContent(dirContentIdx).isdir && ~contains(dirContent(dirContentIdx).name, '.')
@@ -57,7 +81,7 @@ for subjectIdx = 1:numel(subjectDir)
                     if ~isempty(files)
                         % subjectCtr = subjectCtr + 1;
                         subjects.(dirContent(dirContentIdx).name)(subjectCtr) = ...
-                            partload.Subject('subjectId', subjectId);
+                            partload.Subject('subjectId', subjectId, 'outputDir', cfg.paths.outputDir);
                         nfiles = 1:numel(files);
                         for filesIdx = nfiles
                             if contains(files(filesIdx).name, 'static')
