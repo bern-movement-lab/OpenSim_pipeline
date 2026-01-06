@@ -79,11 +79,18 @@ partload-opensim/
 ```
 
 # How to contribute 
-You are very welcome to contribute to the project — whether you are an external contributor or an internal member of the BFH.
+You are very welcome to contribute to the project, whether you are an external contributor or an internal member of the BFH.
 
-## External Contributors
+## Guideline for Commit Messages
+Commit code, must be any of the following:
 
-The easiest way to do so is to fork the project, make the modifications and then open a **pull request** to the main project. Don't forget to add your name to the contributor in the documentation of the page if you do so!
+    INI: Initialization: Add existing files to a repository. Normally only used for initialization.
+    ENH: Enhancement: Add, improve, or remove functionality; change application behavior.
+    FIX: Bugfix: Fix something that does not work correctly.
+    STY: Style: Minor cosmetic changes to code (ie rename variables for clarify) that does not change the behavior of the code
+    REF: Refactor: improve code organization or implementation for maintainability purposes. Also does not change behavior of code
+    DOC: Documentation: documentation only change (source code or user documentation)
+    TST: Test: adding or changing a test; does not affect application behavior
 
 ## Internal Contributors
 - "**OpenSim_Pipeline**"  is a subfolder of the main project "**partload**"
@@ -125,5 +132,21 @@ Push from the internal (origin) to the public repository: <br>
 Push the subtree from the internal (origin) to the public repository: <br>
 `git subtree push --prefix=OpenSim_pipeline public main`
 
+## External Contributors
 
+The easiest way to do so is to fork the project, make the modifications and then open a **pull request** to the main project. Don't forget to add your name to the contributor in the documentation of the page if you do so!
+
+
+## Authors & Contributors
+
+### Core Authors
+
+- Lukas Connolly
+- Cedric Rauber
+- Philippe Baehler
+
+### Contributors
+
+- Jana Ender
+- Michael Streit
 
