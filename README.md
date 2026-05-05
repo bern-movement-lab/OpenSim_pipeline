@@ -142,11 +142,13 @@ The easiest way to do so is to fork the project, make the modifications and then
 ### Core Authors
 
 - Lukas Connolly
+- Marco Senteler
 - Cedric Rauber
 - Philippe Baehler
 
 ### Contributors
 
 - Jana Ender
-- Michael Streit
+- [Michael Streit](https://github.com/1michaelstreit)
+- [Patric Eichelberger](https://github.com/pelberger)
 
