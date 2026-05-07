@@ -92,14 +92,7 @@ Commit code, must be any of the following:
     DOC: Documentation: documentation only change (source code or user documentation)
     TST: Test: adding or changing a test; does not affect application behavior
 
-## Internal Contributors
-- "**OpenSim_Pipeline**"  is a subfolder of the main project "**partload**"
-- Work primariliy on **GitLab (origin)**
-- Create a feature branch
-- Merge your feature branch into origin/main
-- Push only the main branch from origin to public with the commands shown in the structure section
-
-### Git structure
+## Git structure
 Set up your git structure as multi-remote on your local repository as described below.
 #### mat2os (partial mirroring of the master branch)
         remote
@@ -108,8 +101,6 @@ Set up your git structure as multi-remote on your local repository as described 
         public  git@github.com:bern-movement-lab/mat2os.git (fetch)
         public  git@github.com:bern-movement-lab/mat2os.git (push)
 
-push from the internal (origin) to the public repository: <br>
-`git push public origin/master:master`
 
 		
 #### tlsm (partial mirroring of the main branch)
@@ -119,8 +110,6 @@ push from the internal (origin) to the public repository: <br>
         public  git@github.com:bern-movement-lab/tlsm (fetch)
         public  git@github.com:bern-movement-lab/tlsm (push)
 		
-Push from the internal (origin) to the public repository: <br>
-`git push public origin/main:main`
 		
 #### partload (Subtree split with multi-remote setup)
         remote
@@ -129,12 +118,36 @@ Push from the internal (origin) to the public repository: <br>
 		public  git@github.com:bern-movement-lab/OpenSim_pipeline.git (fetch)
 		public  git@github.com:bern-movement-lab/OpenSim_pipeline.git (push)		
 
-Push the subtree from the internal (origin) to the public repository: <br>
-`git subtree push --prefix=OpenSim_pipeline public main`
 
-## External Contributors
 
-The easiest way to do so is to fork the project, make the modifications and then open a **pull request** to the main project. Don't forget to add your name to the contributor in the documentation of the page if you do so!
+## Workflow contribution (OpenSim_pipeline)
+- Work primariliy on **GitLab** `origin/main`, this is the source of truth
+- Full development happens here
+- May contain private/internal code
+- "**OpenSim_Pipeline**"  is a subfolder of the main project "**partload**"
+
+### Workflow Internal Contributors
+1. Develop internally
+    - creat feature branch
+    - implement changes
+    - merge into `origin/main`
+2. Export internal subtree to public repository with temporary generated branch
+    - `git subtree split --prefix=OpenSim_pipeline -b public-sync`
+    - `git push -f public public-sync`
+3. Create public Pull Request (PR)
+    - Open PR on Github `public-sync → public/main`
+    - Review on Github
+4. Merge into public repository
+    - Merge PR into public/main on Github
+5. Delete temporary remote branch
+    - `git push public --delete public-sync`
+
+### Workflow external Contributors
+
+1. External contributor opens PR
+    - `fork -> feature branch -> PR to public/main`
+2. PR will be reviewed and merged 
+
 
 
 ## Authors & Contributors
